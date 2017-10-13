@@ -2,7 +2,12 @@
 title: "Nested Archimedean Copulas"
 subtitle: "(Ou copules archimédiennes hiérarchiques chez molière)"
 runtime: shiny
-output: ioslides_presentation
+output: 
+  ioslides_presentation:
+    logo: logo-isfa.png
+    css: styles.css
+    incremental: yes
+    
 ---
 
 ```{r setup, include=FALSE}
