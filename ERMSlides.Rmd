@@ -1,5 +1,6 @@
 ---
-title: "Untitled"
+title: "Nested Archimedean Copulas"
+subtitle: "(Ou copules archimédiennes hiérarchiques chez molière)"
 runtime: shiny
 output: ioslides_presentation
 ---
