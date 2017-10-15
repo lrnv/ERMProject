@@ -1,26 +1,83 @@
 ---
-title: "Nested Archimedean Copulas"
-subtitle: "(Ou copules archimédiennes hiérarchiques chez molière)"
+title: "Copules archimediennes hierarchiques"
+subtitle: "Nested archimedean copulas"
 runtime: shiny
 output: 
   ioslides_presentation:
-    logo: logo-isfa.png
-    css: styles.css
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
     incremental: yes
-    
+    logo: logo-isfa.png
+    smaller: yes
+    widescreen: yes
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE,message = FALSE,warning = FALSE)
 ```
 
-## Shiny Presentation
+## Explications
 
-This R Markdown presentation is made interactive using Shiny. The viewers of the presentation can change the assumptions underlying what's presented and see the results immediately. 
+Ces slides sont compilés et tournent sur un serveur shiny. 
 
-To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
+quelques racourcits existent ("w" pour se mettre en widescreen, "p" pour avoir les notes du presentateurs, etc... )
 
-## Interactive Plot
+Plus d'infor disponibles la : 
+<http://rmarkdown.rstudio.com/ioslides_presentation_format.html>
+
+
+
+
+## Dygraphs : Pour les séries temporelles.
+````{r}
+library(dygraphs,quietly = TRUE)
+dygraph(nhtemp, main = "New Haven Temperatures") %>% 
+  dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
+````
+
+
+## Plotly avec D3.js
+````{r}
+library(ggplot2,quietly = TRUE)
+library(plotly,quietly = TRUE)
+p <- ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
+            geom_bar(position = "dodge")
+ggplotly(p)
+````
+
+
+## Highcharts 
+````{r, echo=FALSE}
+library(magrittr,quietly = TRUE)
+library(highcharter,quietly = TRUE)
+highchart() %>% 
+  hc_title(text = "Scatter chart with size and color") %>% 
+  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
+                        mtcars$drat, mtcars$hp)
+````
+
+
+## Bokeh
+````{r}
+library(rbokeh,quietly = TRUE)
+figure() %>%
+  ly_points(Sepal.Length, Sepal.Width, data = iris,
+    color = Species, glyph = Species,
+    hover = list(Sepal.Length, Sepal.Width))
+````
+
+## network3D
+
+```{r}
+require(networkD3,quietly = TRUE)
+data(MisLinks, MisNodes)
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4)
+```
+
+## Un peu de shiny ?
 
 ```{r eruptions}
 inputPanel(
@@ -39,6 +96,14 @@ renderPlot({
   lines(dens, col = "blue")
 })
 ```
+
+
+## Ou tout simplement une datatable : 
+```{r}
+library(DT,quietly = TRUE)
+datatable(iris, options = list(pageLength = 5))
+```
+
 
 ## Bullets
 

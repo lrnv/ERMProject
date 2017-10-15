@@ -14,3 +14,8 @@ slides > slide:not(.nobackground):before {
   height: 80px;
   background-size: 150px 75px;
 }
+
+slides > slide.backdrop {
+  background: none !important;
+  background-color: white !important;
+}
