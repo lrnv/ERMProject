@@ -15,6 +15,13 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE,message = FALSE,warning = FALSE)
+
+####### Instalation des différents packets nécéssaires : 
+    .list.of.packages <- c("shiny","dygraphs","fitdistrplus","CDVine","asbio","copula","VineCopula","shinyjs")
+    .new.packages <- .list.of.packages[!(.list.of.packages %in% installed.packages()[,"Package"])]
+    if(length(.new.packages)) install.packages(.new.packages)
+    lapply(.list.of.packages,function(x){library(x,character.only=TRUE)}) 
+    
 ```
 
 ## Explications
@@ -26,95 +33,100 @@ quelques racourcits existent ("w" pour se mettre en widescreen, "p" pour avoir l
 Plus d'infor disponibles la : 
 <http://rmarkdown.rstudio.com/ioslides_presentation_format.html>
 
+## Définition des Copules archimédiennes hierarchiques (HAC)
+
+
+Rappel : Un bon générateur est une fonction $\varphi : \mathbb{R}^{+} \rightarrow [0;1] $ continue, décroissante,
 
 
 
-## Dygraphs : Pour les séries temporelles.
-````{r}
-library(dygraphs,quietly = TRUE)
-dygraph(nhtemp, main = "New Haven Temperatures") %>% 
-  dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
-````
+
+<!-- ## Dygraphs : Pour les séries temporelles. -->
+<!-- ````{r} -->
+<!-- library(dygraphs,quietly = TRUE) -->
+<!-- dygraph(nhtemp, main = "New Haven Temperatures") %>%  -->
+<!--   dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01")) -->
+<!-- ```` -->
 
 
-## Plotly avec D3.js
-````{r}
-library(ggplot2,quietly = TRUE)
-library(plotly,quietly = TRUE)
-p <- ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
-            geom_bar(position = "dodge")
-ggplotly(p)
-````
+<!-- ## Plotly avec D3.js -->
+<!-- ````{r} -->
+<!-- library(ggplot2,quietly = TRUE) -->
+<!-- library(plotly,quietly = TRUE) -->
+<!-- p <- ggplot(data = diamonds, aes(x = cut, fill = clarity)) + -->
+<!--             geom_bar(position = "dodge") -->
+<!-- ggplotly(p) -->
+<!-- ```` -->
 
 
-## Highcharts 
-````{r, echo=FALSE}
-library(magrittr,quietly = TRUE)
-library(highcharter,quietly = TRUE)
-highchart() %>% 
-  hc_title(text = "Scatter chart with size and color") %>% 
-  hc_add_series_scatter(mtcars$wt, mtcars$mpg,
-                        mtcars$drat, mtcars$hp)
-````
+<!-- ## Highcharts  -->
+<!-- ````{r, echo=FALSE} -->
+<!-- library(magrittr,quietly = TRUE) -->
+<!-- library(highcharter,quietly = TRUE) -->
+<!-- highchart() %>%  -->
+<!--   hc_title(text = "Scatter chart with size and color") %>%  -->
+<!--   hc_add_series_scatter(mtcars$wt, mtcars$mpg, -->
+<!--                         mtcars$drat, mtcars$hp) -->
+<!-- ```` -->
 
 
-## Bokeh
-````{r}
-library(rbokeh,quietly = TRUE)
-figure() %>%
-  ly_points(Sepal.Length, Sepal.Width, data = iris,
-    color = Species, glyph = Species,
-    hover = list(Sepal.Length, Sepal.Width))
-````
+<!-- ## Bokeh -->
+<!-- ````{r} -->
+<!-- library(rbokeh,quietly = TRUE) -->
+<!-- figure() %>% -->
+<!--   ly_points(Sepal.Length, Sepal.Width, data = iris, -->
+<!--     color = Species, glyph = Species, -->
+<!--     hover = list(Sepal.Length, Sepal.Width)) -->
+<!-- ```` -->
 
-## network3D
+<!-- ## network3D -->
 
-```{r}
-require(networkD3,quietly = TRUE)
-data(MisLinks, MisNodes)
-forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
-             Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4)
-```
+<!-- ```{r} -->
+<!-- require(networkD3,quietly = TRUE) -->
+<!-- data(MisLinks, MisNodes) -->
+<!-- forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source", -->
+<!--              Target = "target", Value = "value", NodeID = "name", -->
+<!--              Group = "group", opacity = 0.4) -->
+<!-- ``` -->
 
-## Un peu de shiny ?
+<!-- ## Un peu de shiny ? -->
 
-```{r eruptions}
-inputPanel(
-  selectInput("n_breaks", label = "Number of bins:",
-              choices = c(10, 20, 35, 50), selected = 20),
-  
-  sliderInput("bw_adjust", label = "Bandwidth adjustment:",
-              min = 0.2, max = 2, value = 1, step = 0.2)
-)
+<!-- ```{r eruptions} -->
+<!-- inputPanel( -->
+<!--   selectInput("n_breaks", label = "Number of bins:", -->
+<!--               choices = c(10, 20, 35, 50), selected = 20), -->
 
-renderPlot({
-  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
-       xlab = "Duration (minutes)", main = "Geyser eruption duration")
-  
-  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
-  lines(dens, col = "blue")
-})
-```
+<!--   sliderInput("bw_adjust", label = "Bandwidth adjustment:", -->
+<!--               min = 0.2, max = 2, value = 1, step = 0.2) -->
+<!-- ) -->
 
+<!-- renderPlot({ -->
+<!--   hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks), -->
+<!--        xlab = "Duration (minutes)", main = "Geyser eruption duration") -->
 
-## Ou tout simplement une datatable : 
-```{r}
-library(DT,quietly = TRUE)
-datatable(iris, options = list(pageLength = 5))
-```
+<!--   dens <- density(faithful$eruptions, adjust = input$bw_adjust) -->
+<!--   lines(dens, col = "blue") -->
+<!-- }) -->
+<!-- ``` -->
 
 
-## Bullets
+<!-- ## Ou tout simplement une datatable :  -->
+<!-- ```{r} -->
+<!-- library(DT,quietly = TRUE) -->
+<!-- datatable(iris, options = list(pageLength = 5)) -->
+<!-- ``` -->
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
 
-## R Output
+<!-- ## Bullets -->
 
-```{r cars}
-summary(cars)
-```
+<!-- - Bullet 1 -->
+<!-- - Bullet 2 -->
+<!-- - Bullet 3 -->
+
+<!-- ## R Output -->
+
+<!-- ```{r cars} -->
+<!-- summary(cars) -->
+<!-- ``` -->
 
 
