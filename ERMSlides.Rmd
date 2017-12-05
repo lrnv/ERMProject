@@ -36,9 +36,8 @@ Plus d'infor disponibles la :
 ## Définition des Copules archimédiennes hierarchiques (HAC)
 
 
+
 Rappel : Un bon générateur est une fonction $\varphi : \mathbb{R}^{+} \rightarrow [0;1] $ continue, décroissante,
-
-
 
 
 <!-- ## Dygraphs : Pour les séries temporelles. -->
@@ -107,13 +106,6 @@ Rappel : Un bon générateur est une fonction $\varphi : \mathbb{R}^{+} \rightar
 <!--   dens <- density(faithful$eruptions, adjust = input$bw_adjust) -->
 <!--   lines(dens, col = "blue") -->
 <!-- }) -->
-<!-- ``` -->
-
-
-<!-- ## Ou tout simplement une datatable :  -->
-<!-- ```{r} -->
-<!-- library(DT,quietly = TRUE) -->
-<!-- datatable(iris, options = list(pageLength = 5)) -->
 <!-- ``` -->
 
 
